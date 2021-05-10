@@ -7,50 +7,49 @@ import cv2
 from PIL import Image
 from skimage import io 
 
-imagen = cv2.imread(r'C:\Users\Karla\OneDrive - Instituto Politecnico Nacional\Desktop\Materias\Pattern Recognition\Proyecto1\CMA-x1.png')
-gris = cv2.cvtColor(imagen, cv2.COLOR_BGR2GRAY)
-cv2.imshow('imagen', gris)
-cv2.waitKey(0)
-cv2.imwrite(r'C:\Users\Karla\OneDrive - Instituto Politecnico Nacional\Desktop\Materias\Pattern Recognition\Proyecto1\gris.jpg', gris)#para guardarla
 
 def Mediana(nombre, valor):
-    imagen = cv2.imread(r'C:\Users\Karla\OneDrive - Instituto Politecnico Nacional\Desktop\Materias\Pattern Recognition\Proyecto1\CMA-x1.png', 0)
+    imagen = cv2.imread(r'C:\Users\sonic\Documents\ESCOM\Octavo Semestre\Pattern Recognition\Pattern-Recognition-Proyecto-1-main\Pattern-Recognition-Proyecto-1-main\CMA-x1.png', 0)
     cv2.imshow('original', imagen)
     img2 = cv2.medianBlur(imagen, valor)
     cv2.imshow("Mediana", img2)
     cv2.waitKey(0)
-    cv2.imwrite (r'C:\Users\Karla\OneDrive - Instituto Politecnico Nacional\Desktop\Materias\Pattern Recognition\Proyecto1\Mediana.jpg', img2)
+    cv2.imwrite (r'C:\Users\sonic\Documents\ESCOM\Octavo Semestre\Pattern Recognition\Pattern-Recognition-Proyecto-1-main\Pattern-Recognition-Proyecto-1-main\Mediana.jpg', img2)
 
-def Minimo(nombre):
-    imagen = Image.open(r'C:\Users\Karla\OneDrive - Instituto Politecnico Nacional\Desktop\Materias\Pattern Recognition\Proyecto1\Mediana.jpg')
-    imagen.show()
-    Histograma(img)
+def Minimo(n,ruta):
+    img = cv2.imread(ruta)
 
-    copia = Image.new('RGB', img.size)
-    datosImg = Image.Image.getdata(imagen)
-    copia.putdata(datosImg)
-    ancho, alto = img.size
+      #Crea la forma del kernel
+    tam = (n, n)
+    forma = cv2.MORPH_RECT
+    kernel = cv2.getStructuringElement(forma, tam)
 
-    for i in range(ancho):
-        for j in range(alto):
-            r, g, b = copia.getpixel((i,j))
-            x = (r + g + b) / 3
-            intx = int (x)
-            pixel = tuple ([intx, intx, intx])
-            copia.putpixel((i,j), pixel)
+      # Aplica el filtro minimo
+    imgResult = cv2.erode(img, kernel)
 
-    for i in range(ancho):
-        for j in range(alto):
-            vecindades = ObtenerVecinos(img, i, j)
-            mini = min(((vecindades[0][0]), (vecindades[1][0]), (vecindades[2][0]), 
-                        (vecindades[3][0]), (vecindades[4][0]), (vecindades[5][0]), 
-                        (vecindades[6][0]), (vecindades[7][0]), (vecindades[8][0])))
-            res = mini
-            pixel = tuple([res, res, res])
-            copia.putpixel((i, j), pixel)
+      #Muestra el resultado
+    cv2.namedWindow('Resultado con n ' + str(n), cv2.WINDOW_NORMAL
+    cv2.imshow('Resultado con n ' + str(n), imgResult)
 
-    copia.show()
-    copia.save(r'C:\Users\Karla\OneDrive - Instituto Politecnico Nacional\Desktop\Materias\Pattern Recognition\Proyecto1\Min.jpg')
-    Histograma(copia)
+def Maximo(n,ruta):
+    img = cv2.imread(ruta)
 
+      # Creates the shape of the kernel
+    tam = (n,n)
+    forma = cv2.MORPH_RECT
+    kernel = cv2.getStructuringElement(forma, tam)
 
+      # Applies the maximum filter with kernel NxN
+    imgResult = cv2.dilate(img, kernel)
+
+      # Shows the result
+    cv2.namedWindow('Result with n ' + str(n), cv2.WINDOW_NORMAL) # Adjust the window length
+    cv2.imshow('Result with n ' + str(n), imgResult)
+
+imagen = cv2.imread('CMA-x1.png')
+gris = cv2.cvtColor(imagen, cv2.COLOR_BGR2GRAY)
+cv2.imshow('imagen', gris)
+cv2.waitKey(0)
+cv2.imwrite('gris.jpg', gris)#para guardarla
+Maximo(3,'gris.jpg')
+Minimo(5,'gris.jpg')
