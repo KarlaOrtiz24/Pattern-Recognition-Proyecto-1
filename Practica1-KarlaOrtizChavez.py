@@ -11,6 +11,59 @@ import tkinter as tk
 from tkinter import filedialog
 import matplotlib.cm as cm 
 import xlrd
+def mediaBosque():
+    datos = pd.read_excel(r'C:/Users/Karla/OneDrive - Instituto Politecnico Nacional/Desktop/Materias/Pattern Recognition/Proyecto1/Bosque.xlsx', sheet_name='Hoja1')
+    df = pd.DataFrame(datos)
+
+    sumar = df.loc[1,'R']
+    for i in range(2, len(df)):
+        total = df['R'].mean()
+    print("Total", total)  
+    sumarG = df.loc[1,'G']
+    for i in range(2, len(df)):
+        total2 = df['G'].mean()
+    print("Total", total2)
+    sumarB = df.loc[1,'B']
+    for i in range(2, len(df)):
+        total3 = df['B'].mean()
+    print("Total", total3)
+mediaBosque()
+
+def mediaTierra():
+    datos = pd.read_excel(r'C:/Users/Karla/OneDrive - Instituto Politecnico Nacional/Desktop/Materias/Pattern Recognition/Proyecto1/Suelo.xlsx', sheet_name='Hoja1')
+    df = pd.DataFrame(datos)
+
+    sumar = df.loc[1,'R']
+    for i in range(2, len(df)):
+        total = df['R'].mean()
+    print("Total", total)  
+    sumarG = df.loc[1,'G']
+    for i in range(2, len(df)):
+        total2 = df['G'].mean()
+    print("Total", total2)
+    sumarB = df.loc[1,'B']
+    for i in range(2, len(df)):
+        total3 = df['B'].mean()
+    print("Total", total3)
+mediaTierra()
+
+def mediaCielo():
+    datos = pd.read_excel(r'C:/Users/Karla/OneDrive - Instituto Politecnico Nacional/Desktop/Materias/Pattern Recognition/Proyecto1/Cielo.xlsx', sheet_name='Hoja1')
+    df = pd.DataFrame(datos)
+
+    sumar = df.loc[1,'R']
+    for i in range(2, len(df)):
+        total = df['R'].mean()
+    print("Total", total)  
+    sumarG = df.loc[1,'G']
+    for i in range(2, len(df)):
+        total2 = df['G'].mean()
+    print("Total", total2)
+    sumarB = df.loc[1,'B']
+    for i in range(2, len(df)):
+        total3 = df['B'].mean()
+    print("Total", total3)
+mediaCielo()
 class ClasificadorBayesiano:      
         z1= [102.11, 79.13,55.81]
         z2 = [169.84,136.83,101.58]
