@@ -15,12 +15,12 @@ def Umbralizacion(imagen,x):
     cv2.imwrite('umbral.jpg', dst1)#para guardarla
 
 def Mediana(nombre, valor):
-    imagen = cv2.imread(r'C:\Users\sonic\Documents\ESCOM\Octavo Semestre\Pattern Recognition\Pattern-Recognition-Proyecto-1-main\Pattern-Recognition-Proyecto-1-main\CMA-x1.png', 0)
+    imagen = cv2.imread(r'C:\Users\Karla\Pattern-Recognition-Proyecto-1\CMA-x1.png', 0)
     cv2.imshow('original', imagen)
     img2 = cv2.medianBlur(imagen, valor)
     cv2.imshow("Mediana", img2)
     cv2.waitKey(0)
-    cv2.imwrite (r'C:\Users\sonic\Documents\ESCOM\Octavo Semestre\Pattern Recognition\Pattern-Recognition-Proyecto-1-main\Pattern-Recognition-Proyecto-1-main\Mediana.jpg', img2)
+    cv2.imwrite (r'C:\Users\Karla\Pattern-Recognition-Proyecto-1\Mediana.jpg', img2)
 
 def Minimo(n,ruta):
     img = cv2.imread(ruta)

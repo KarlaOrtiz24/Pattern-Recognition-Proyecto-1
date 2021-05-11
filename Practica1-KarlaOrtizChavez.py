@@ -18,7 +18,7 @@ def mediaBosque():
     sumar = df.loc[1,'R']
     for i in range(2, len(df)):
         total = df['R'].mean()
-    print("Total", total)  
+    print("Total", total)   
     sumarG = df.loc[1,'G']
     for i in range(2, len(df)):
         total2 = df['G'].mean()
@@ -187,6 +187,18 @@ plt.show()
       #  ax.scatter(xs, ys,zs,marker=m, c=colores)
      #   plt.title('Clases')
     #    plt.show()
+
+salir = False 
+opcion = 0 
+while not salir: 
+        print("1. Opcion 1")
+        print("2. Opcion 2")
+        print("3. Opcion 3")
+        print("4. Salir")
+
+        print("Elige una opcion")
+        if opcion == 1: 
+                
 
 
 
