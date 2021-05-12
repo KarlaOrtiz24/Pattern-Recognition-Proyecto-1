@@ -17,7 +17,7 @@ def mediaBosque():
     df = pd.DataFrame(datos)
 
     sumar = df.loc[1,'R']
-    print("Tamaño ", len(df)-1)
+    print("Tamaño ", len(df))
     for i in range(2, len(df)):
         total = df['R'].mean()
         media[0]=total
@@ -83,34 +83,34 @@ def covarianzaBosque(media):
     matriz=[[0.0,0.0,0.0],[0.0,0.0,0.0],[0.0,0.0,0.0]]
     datos = pd.read_excel('Bosque.xlsx', sheet_name='Hoja1')
     df = pd.DataFrame(datos)
-    for i in range(2, len(df)):
-        prototipo=[df.loc[i-1,'R']-media[0],df.loc[i-1,'G']-media[1],df.loc[i-1,'B']-media[2]]
+    for i in range(len(df)):
+        prototipo=[df.loc[i,'R']-media[0],df.loc[i,'G']-media[1],df.loc[i,'B']-media[2]]
         for j in range(len(prototipo)):
             for k in range(len(prototipo)):
-                matriz[j][k]=matriz[j][k]+((prototipo[j]*prototipo[k])/(len(df)-2))
-    print(matriz)
+                matriz[j][k]=matriz[j][k]+((prototipo[j]*prototipo[k])/(len(df)-1))
+    print("Matriz de bosque", matriz)
 
 def covarianzaTierra(media):
     matriz=[[0.0,0.0,0.0],[0.0,0.0,0.0],[0.0,0.0,0.0]]
     datos = pd.read_excel('Suelo.xlsx', sheet_name='Hoja1')
     df = pd.DataFrame(datos)
-    for i in range(2, len(df)):
-        prototipo=[df.loc[i-1,'R']-media[0],df.loc[i-1,'G']-media[1],df.loc[i-1,'B']-media[2]]
+    for i in range(len(df)):
+        prototipo=[df.loc[i,'R']-media[0],df.loc[i,'G']-media[1],df.loc[i,'B']-media[2]]
         for j in range(len(prototipo)):
             for k in range(len(prototipo)):
-                matriz[j][k]=matriz[j][k]+((prototipo[j]*prototipo[k])/(len(df)-2))
-    print(matriz)
+                matriz[j][k]=matriz[j][k]+((prototipo[j]*prototipo[k])/(len(df)-1))
+    print("Matriz de Tierra: ",matriz)
     
 def covarianzaCielo(media):
     matriz=[[0.0,0.0,0.0],[0.0,0.0,0.0],[0.0,0.0,0.0]]
     datos = pd.read_excel('Cielo.xlsx', sheet_name='Hoja1')
     df = pd.DataFrame(datos)
-    for i in range(2, len(df)):
-        prototipo=[df.loc[i-1,'R']-media[0],df.loc[i-1,'G']-media[1],df.loc[i-1,'B']-media[2]]
+    for i in range(len(df)):
+        prototipo=[df.loc[i,'R']-media[0],df.loc[i,'G']-media[1],df.loc[i,'B']-media[2]]
         for j in range(len(prototipo)):
             for k in range(len(prototipo)):
-                matriz[j][k]=matriz[j][k]+((prototipo[j]*prototipo[k])/(len(df)-2))
-    print(matriz)
+                matriz[j][k]=matriz[j][k]+((prototipo[j]*prototipo[k])/(len(df)-1))
+    print("Matriz de Ciello: ",matriz)
     
 class ClasificadorBayesiano:      
         z1= [102.11, 79.13,55.81]
