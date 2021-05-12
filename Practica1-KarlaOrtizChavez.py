@@ -89,6 +89,7 @@ def covarianzaBosque(media):
             for k in range(len(prototipo)):
                 matriz[j][k]=matriz[j][k]+((prototipo[j]*prototipo[k])/(len(df)-1))
     print("Matriz de bosque", matriz)
+    return matriz
 
 def covarianzaTierra(media):
     matriz=[[0.0,0.0,0.0],[0.0,0.0,0.0],[0.0,0.0,0.0]]
@@ -100,6 +101,7 @@ def covarianzaTierra(media):
             for k in range(len(prototipo)):
                 matriz[j][k]=matriz[j][k]+((prototipo[j]*prototipo[k])/(len(df)-1))
     print("Matriz de Tierra: ",matriz)
+    return matriz
     
 def covarianzaCielo(media):
     matriz=[[0.0,0.0,0.0],[0.0,0.0,0.0],[0.0,0.0,0.0]]
@@ -110,16 +112,18 @@ def covarianzaCielo(media):
         for j in range(len(prototipo)):
             for k in range(len(prototipo)):
                 matriz[j][k]=matriz[j][k]+((prototipo[j]*prototipo[k])/(len(df)-1))
-    print("Matriz de Ciello: ",matriz)
+    print("Matriz de Cielo: ",matriz)
+    return matriz
     
-class ClasificadorBayesiano:      
-        z1= [102.11, 79.13,55.81]
-        z2 = [169.84,136.83,101.58]
-        z3 = [201.59, 215.4, 221.64]
-        A1 = np.array([[1110.74, 875.58, 743.61],[875.58,740.40,658.92],[743.61, 658.92, 629.53]])
-        A2 = np.array([[1663.05, 1534.69, 1325.04], [1534.69, 1471.16, 1300.34], [1325.04, 1300.34, 1205.75]])
-        A3 = np.array([[1106.44, 207.28, 2.52],[207.28, 5860.72, 4.76], [2.52, 4.76, 161.91]])
-        PatronDesconocido1= [0,64,205]
+class ClasificadorBayesiano:
+        def __init__(self,m1,m2,m3,mc1,mc2,mc3):
+            self.z1= m1
+            self.z2 = m2
+            self.z3 = m3
+            self.A1 = mc1
+            self.A2 = mc2
+            self.A3 = mc3
+            PatronDesconocido1= [0,64,205]
         def ClasificadorGaussiano(self, pixelR, pixelG, pixelB):
                 vectorPixel = np.array([pixelR,pixelG, pixelB])
                 distanciaZB= vectorPixel-self.z1
@@ -201,9 +205,9 @@ mediaB=mediaBosque()
 mediaT=mediaTierra()
 mediaC=mediaCielo()
 print("Prueba de media:", mediaT)
-covarianzaBosque(mediaB)
-covarianzaTierra(mediaT)
-covarianzaCielo(mediaC)
+matrizB=covarianzaBosque(mediaB)
+matrizT=covarianzaTierra(mediaT)
+matrizC=covarianzaCielo(mediaC)
 root = tk.Tk()
 root.withdraw()
 file_path = filedialog.askopenfilename()
@@ -212,7 +216,7 @@ imagen = cv2.imread(file_path)
 cv2.namedWindow('imagen_CMA')
 cv2.setMouseCallback('imagen_CMA', mouse)
 cv2.imshow('imagen_CMA', imagen)
-G = ClasificadorBayesiano()
+G = ClasificadorBayesiano(mediaB,mediaT,mediaC,matrizB,matrizT,matrizC)
 fig=plt.figure()
 ax = fig.add_subplot(projection='3d')
 for m,zlow,zhigh in [('o',-50,-25), ('^', -30, -5)]:
@@ -242,13 +246,13 @@ plt.show()
      #   plt.title('Clases')
     #    plt.show()
 
-salir = False 
-opcion = 0 
-while not salir: 
-        print("1. Opcion 1")
-        print("2. Opcion 2")
-        print("3. Opcion 3")
-        print("4. Salir")
+#salir = False 
+#opcion = 0 
+#while not salir: 
+ #       print("1. Opcion 1")
+  #      print("2. Opcion 2")
+   #     print("3. Opcion 3")
+    #    print("4. Salir")
 
-        print("Elige una opcion")
+     #   print("Elige una opcion")
         
