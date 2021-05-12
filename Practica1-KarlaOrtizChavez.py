@@ -12,58 +12,106 @@ from tkinter import filedialog
 import matplotlib.cm as cm 
 import xlrd
 def mediaBosque():
-    datos = pd.read_excel(r'C:/Users/Karla/OneDrive - Instituto Politecnico Nacional/Desktop/Materias/Pattern Recognition/Proyecto1/Bosque.xlsx', sheet_name='Hoja1')
+    media=[0,0,0]
+    datos = pd.read_excel('Bosque.xlsx', sheet_name='Hoja1')
     df = pd.DataFrame(datos)
 
     sumar = df.loc[1,'R']
+    print("Tamaño ", len(df)-1)
     for i in range(2, len(df)):
         total = df['R'].mean()
+        media[0]=total
     print("Total", total)   
     sumarG = df.loc[1,'G']
     for i in range(2, len(df)):
         total2 = df['G'].mean()
+        media[1]=total2
     print("Total", total2)
     sumarB = df.loc[1,'B']
     for i in range(2, len(df)):
         total3 = df['B'].mean()
+        media[2]=total3
     print("Total", total3)
-mediaBosque()
+    return media
 
 def mediaTierra():
-    datos = pd.read_excel(r'C:/Users/Karla/OneDrive - Instituto Politecnico Nacional/Desktop/Materias/Pattern Recognition/Proyecto1/Suelo.xlsx', sheet_name='Hoja1')
+    media=[0,0,0]
+    datos = pd.read_excel('Suelo.xlsx', sheet_name='Hoja1')
     df = pd.DataFrame(datos)
 
     sumar = df.loc[1,'R']
     for i in range(2, len(df)):
         total = df['R'].mean()
+        media[0]=total
     print("Total", total)  
     sumarG = df.loc[1,'G']
     for i in range(2, len(df)):
         total2 = df['G'].mean()
+        media[1]=total2
     print("Total", total2)
     sumarB = df.loc[1,'B']
     for i in range(2, len(df)):
         total3 = df['B'].mean()
+        media[2]=total3
     print("Total", total3)
-mediaTierra()
+    return media
 
 def mediaCielo():
-    datos = pd.read_excel(r'C:/Users/Karla/OneDrive - Instituto Politecnico Nacional/Desktop/Materias/Pattern Recognition/Proyecto1/Cielo.xlsx', sheet_name='Hoja1')
+    media=[0,0,0]
+    datos = pd.read_excel('Cielo.xlsx', sheet_name='Hoja1')
     df = pd.DataFrame(datos)
 
-    sumar = df.loc[1,'R']
+    sumar = df.loc[0,'R']
+    print("Sumar", sumar)
     for i in range(2, len(df)):
         total = df['R'].mean()
+        media[0]=total
     print("Total", total)  
     sumarG = df.loc[1,'G']
     for i in range(2, len(df)):
         total2 = df['G'].mean()
+        media[1]=total
     print("Total", total2)
     sumarB = df.loc[1,'B']
     for i in range(2, len(df)):
         total3 = df['B'].mean()
+        media[2]=total
     print("Total", total3)
-mediaCielo()
+    return media
+
+def covarianzaBosque(media):
+    matriz=[[0.0,0.0,0.0],[0.0,0.0,0.0],[0.0,0.0,0.0]]
+    datos = pd.read_excel('Bosque.xlsx', sheet_name='Hoja1')
+    df = pd.DataFrame(datos)
+    for i in range(2, len(df)):
+        prototipo=[df.loc[i-1,'R']-media[0],df.loc[i-1,'G']-media[1],df.loc[i-1,'B']-media[2]]
+        for j in range(len(prototipo)):
+            for k in range(len(prototipo)):
+                matriz[j][k]=matriz[j][k]+((prototipo[j]*prototipo[k])/(len(df)-2))
+    print(matriz)
+
+def covarianzaTierra(media):
+    matriz=[[0.0,0.0,0.0],[0.0,0.0,0.0],[0.0,0.0,0.0]]
+    datos = pd.read_excel('Suelo.xlsx', sheet_name='Hoja1')
+    df = pd.DataFrame(datos)
+    for i in range(2, len(df)):
+        prototipo=[df.loc[i-1,'R']-media[0],df.loc[i-1,'G']-media[1],df.loc[i-1,'B']-media[2]]
+        for j in range(len(prototipo)):
+            for k in range(len(prototipo)):
+                matriz[j][k]=matriz[j][k]+((prototipo[j]*prototipo[k])/(len(df)-2))
+    print(matriz)
+    
+def covarianzaCielo(media):
+    matriz=[[0.0,0.0,0.0],[0.0,0.0,0.0],[0.0,0.0,0.0]]
+    datos = pd.read_excel('Cielo.xlsx', sheet_name='Hoja1')
+    df = pd.DataFrame(datos)
+    for i in range(2, len(df)):
+        prototipo=[df.loc[i-1,'R']-media[0],df.loc[i-1,'G']-media[1],df.loc[i-1,'B']-media[2]]
+        for j in range(len(prototipo)):
+            for k in range(len(prototipo)):
+                matriz[j][k]=matriz[j][k]+((prototipo[j]*prototipo[k])/(len(df)-2))
+    print(matriz)
+    
 class ClasificadorBayesiano:      
         z1= [102.11, 79.13,55.81]
         z2 = [169.84,136.83,101.58]
@@ -149,7 +197,13 @@ def mouse(event, x,y, flags, param):
                         
                                 cv2.destroyAllWindows()
                                  
-
+mediaB=mediaBosque()
+mediaT=mediaTierra()
+mediaC=mediaCielo()
+print("Prueba de media:", mediaT)
+covarianzaBosque(mediaB)
+covarianzaTierra(mediaT)
+covarianzaCielo(mediaC)
 root = tk.Tk()
 root.withdraw()
 file_path = filedialog.askopenfilename()
@@ -197,8 +251,4 @@ while not salir:
         print("4. Salir")
 
         print("Elige una opcion")
-        if opcion == 1: 
-                
-
-
-
+        
